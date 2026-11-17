@@ -1,0 +1,49 @@
+using System;
+using System.IO;
+
+class Part08_FindOrder
+{
+    static void Main()
+    {
+        string filePath = Path.Combine("records", "orders.txt");
+
+        Console.Write("Enter Order ID: ");
+        string orderId = Console.ReadLine() ?? "";
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("No saved orders found.");
+            return;
+        }
+
+        string[] records = File.ReadAllLines(filePath);
+
+        bool found = false;
+
+        foreach (string record in records)
+        {
+            string[] fields = record.Split('|');
+
+            if (fields.Length > 0 &&
+                fields[0].Equals(orderId,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("\n========== ORDER FOUND ==========");
+
+                Console.WriteLine("Order ID: " + fields[0]);
+                Console.WriteLine("Status: " + fields[1]);
+                Console.WriteLine("Total: PHP " + fields[2]);
+                Console.WriteLine("Cash: PHP " + fields[3]);
+                Console.WriteLine("Change: PHP " + fields[4]);
+
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("\nOrder not found.");
+        }
+    }
+}
