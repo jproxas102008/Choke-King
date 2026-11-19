@@ -335,10 +335,72 @@ class Program
     }
 
     // PROCESS PAYMENT DELENA
+
+    // PROCESS PAYMENT DELENA
     static void ProcessPayment(decimal total)
     {
         decimal cash = 0;
         bool paymentAccepted = false;
+        string paymentMethod = "";
+
+        // NEW: PAYMENT METHOD SELECTION
+        Console.Clear();
+
+        Console.WriteLine("==================================");
+        Console.WriteLine("         PAYMENT METHOD");
+        Console.WriteLine("==================================");
+        Console.WriteLine("[1] Cash");
+        Console.WriteLine("[2] Online Payment");
+        Console.Write("\nChoose payment method: ");
+
+        string paymentChoice = Console.ReadLine()?.Trim() ?? "";
+
+        if (paymentChoice == "1")
+        {
+            paymentMethod = "Cash";
+        }
+        else if (paymentChoice == "2")
+        {
+            Console.WriteLine("\n==================================");
+            Console.WriteLine("       ONLINE PAYMENT");
+            Console.WriteLine("==================================");
+            Console.WriteLine("[1] GCash");
+            Console.WriteLine("[2] Maya");
+            Console.Write("\nChoose online payment: ");
+
+            string onlineChoice = Console.ReadLine()?.Trim() ?? "";
+
+            if (onlineChoice == "1")
+            {
+                paymentMethod = "GCash (Simulation)";
+            }
+            else if (onlineChoice == "2")
+            {
+                paymentMethod = "Maya (Simulation)";
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid online payment method.");
+                Pause();
+                return;
+            }
+
+            // SIMULATED ONLINE PAYMENT
+            Console.WriteLine("\nProcessing " + paymentMethod + "...");
+            Pause();
+
+            cash = total;
+            paymentAccepted = true;
+
+            Console.WriteLine("\nOnline payment successful! (SIMULATION)");
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid payment method.");
+            Pause();
+            return;
+        }
+        // END OF NEW PAYMENT METHOD SELECTION
 
         while (!paymentAccepted)
         {
@@ -426,6 +488,9 @@ class Program
                     change
                 );
 
+                // NEW: DISPLAY SELECTED PAYMENT METHOD
+                Console.WriteLine("Payment Method: " + paymentMethod);
+
                 Array.Clear(cartQuantities, 0, cartQuantities.Length);
 
                 Pause();
@@ -466,6 +531,7 @@ class Program
             }
         }
     }
+
 
     // VALIDATE MONEY INPUT DELENA
     static bool IsValidMoney(string input, out decimal amount)
